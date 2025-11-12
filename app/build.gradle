@@ -1,0 +1,40 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.14'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+    gradlePluginPortal()  // Add this repository for plugins
+}
+
+dependencies {
+    // OCR bridge to Tesseract
+    implementation 'net.sourceforge.tess4j:tess4j:5.10.0'
+    // Global hotkeys
+    implementation 'com.github.kwhat:jnativehook:2.2.2'
+    // JSON for translation API
+    implementation 'com.google.code.gson:gson:2.11.0'
+}
+
+application {
+    mainClass = 'com.team.translator.App'
+}
+
+javafx {
+    version = '17'  // Using a more stable version
+    modules = ['javafx.controls', 'javafx.graphics']
+}
+
+// Helper task: copy JavaFX jars from the Gradle runtime classpath into a local folder
+// so VS Code's debugger can reference them via --module-path.
+task copyJavafxLibs(type: Copy) {
+    into "$projectDir/javafx-lib"
+    // Copy only platform-specific JavaFX jars (windows: '-win') to avoid duplicate module versions
+    from { configurations.runtimeClasspath.filter { it.name.contains('javafx') && it.name.contains('-win') } }
+    doFirst {
+        delete "$projectDir/javafx-lib"
+        mkdir "$projectDir/javafx-lib"
+    }
+}

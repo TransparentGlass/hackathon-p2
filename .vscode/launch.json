@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch Translator App (with JavaFX)",
+      "request": "launch",
+      "mainClass": "com.team.translator.App",
+      "projectName": "app",
+      "vmArgs": "--module-path \"${workspaceFolder}/app/javafx-lib\" --add-modules javafx.controls,javafx.graphics"
+    }
+  ]
+}
