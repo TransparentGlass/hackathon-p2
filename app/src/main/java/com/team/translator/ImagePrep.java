@@ -45,4 +45,6 @@ public class ImagePrep {
         scaledImage.getGraphics().drawImage(image, 0, 0, newWidth, newHeight, null);
         return scaledImage;
     }
+
+
 }

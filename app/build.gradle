@@ -7,6 +7,7 @@ repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
     gradlePluginPortal()  // Add this repository for plugins
+    
 }
 
 dependencies {
@@ -16,6 +17,9 @@ dependencies {
     implementation 'com.github.kwhat:jnativehook:2.2.2'
     // JSON for translation API
     implementation 'com.google.code.gson:gson:2.11.0'
+
+    implementation "org.bytedeco:opencv-platform:4.9.0-1.5.10"
+
 }
 
 application {

@@ -1,5 +1,11 @@
 package com.team.translator;
 
+import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -33,13 +39,17 @@ public class App extends Application {
                             // Capture the selected screen area
                             java.awt.image.BufferedImage raw = Screencapture.capture(x, y, w, h);
 
-                            // Preprocess image
-                            java.awt.image.BufferedImage high = ImagePrep.toHighContrast(raw, 160);
-                            java.awt.image.BufferedImage scaled = ImagePrep.scale2x(high);
+                            // // Preprocess image
+                            // java.awt.image.BufferedImage high = ImagePrep.toHighContrast(raw, 160);
+                            // java.awt.image.BufferedImage scaled = ImagePrep.scale2x(high);
+                            
+
+                            // java.awt.image.BufferedImage re_processed_image = ImageUtilsBytedeco.process(raw);
+                            // showBufferedImage(raw, "welp");
 
                             // Run OCR (ensure Tesseract is installed and path is correct)
-                            OcrService ocr = new OcrService("C:\\Program Files\\Tesseract-OCR", "eng");
-                            String text = ocr.read(scaled);
+                            OcrService ocr = new OcrService("D:\\Software\\Tesseract\\tessdata", "rus");
+                            String text = ocr.read(raw);
 
                             // Show result on JavaFX thread
                             javafx.application.Platform.runLater(() -> {
@@ -97,4 +107,17 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
+    
+    public static void showBufferedImage(BufferedImage img, String title) {
+        JFrame frame = new JFrame(title);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JLabel label = new JLabel(new ImageIcon(img));
+        frame.getContentPane().add(label);
+
+        frame.pack();
+        frame.setLocationRelativeTo(null); // center
+        frame.setVisible(true);
+}
+
 }

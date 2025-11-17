@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Image_prep2",
+      "request": "launch",
+      "mainClass": "com.team.translator.Image_prep2",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
       "name": "Launch Translator App (with JavaFX)",
       "request": "launch",
       "mainClass": "com.team.translator.App",
