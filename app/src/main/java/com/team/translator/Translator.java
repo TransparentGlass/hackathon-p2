@@ -27,44 +27,57 @@ public class Translator {
     }
 
     public String translate(String text, String source, String target) {
-        try {
-            HttpURLConnection connection = establishConnection();
+    try {
+        HttpURLConnection connection = establishConnection();
+        connection.setRequestProperty("Accept", "application/json");
 
-            // JSON payload
-            JsonObject jsonInput = new JsonObject(); 
-            jsonInput.addProperty("q", text);
-            jsonInput.addProperty("source", source);
-            jsonInput.addProperty("target", target);
-            jsonInput.addProperty("format", "text"); // required
+        JsonObject jsonInput = new JsonObject();
+        jsonInput.addProperty("q", text);
+        jsonInput.addProperty("source", source);
+        jsonInput.addProperty("target", target);
+        jsonInput.addProperty("format", "text");
 
-            // Send data
-            try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonInput.toString().getBytes("utf-8");
-                os.write(input, 0, input.length);
-            }
-
-            int status = connection.getResponseCode();
-            BufferedReader br;
-            if (status == 200) {
-                br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
-            } else {
-                br = new BufferedReader(new InputStreamReader(connection.getErrorStream(), "utf-8"));
-            }
-            
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                response.append(line.trim());
-            }
-            br.close();
-
-            JsonObject jsonResponse = JsonParser.parseString(response.toString()).getAsJsonObject();
-            System.err.println(jsonResponse.get("translatedText").getAsString());
-            return jsonResponse.get("translatedText").getAsString();
-
-        } catch (Exception e) {
-            return "Error: " + e.getMessage();
+        try (OutputStream os = connection.getOutputStream()) {
+            byte[] input = jsonInput.toString().getBytes("utf-8");
+            os.write(input, 0, input.length);
         }
+
+        int status = connection.getResponseCode();
+        BufferedReader br = new BufferedReader(
+            new InputStreamReader(
+                status == 200 ? connection.getInputStream() : connection.getErrorStream(),
+                "utf-8"
+            )
+        );
+
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            response.append(line.trim());
+        }
+        br.close();
+
+        System.out.println("Raw response: " + response);
+
+        // JsonObject jsonResponse = JsonParser.parseString(response.toString()).getAsJsonObject();
+        // if (jsonResponse.has("translatedText")) {
+        //     String translatedText = jsonResponse.get("translatedText").getAsString();
+        //     System.out.println("Translated: " + translatedText);
+        //     return translatedText;
+        // } else {
+        //     return "Error response: " + response;
+        // }
+
+
+        JsonObject jsonResponse = JsonParser.parseString(response.toString()).getAsJsonObject();
+        String translatedText = jsonResponse.get("translatedText").getAsString();
+        return translatedText;
+
+
+    } catch (Exception e) {
+        return "Error: " + e.getMessage();
     }
+}
+
 
 }

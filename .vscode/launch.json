@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "LibreTranslateTest",
+      "request": "launch",
+      "mainClass": "com.team.translator.LibreTranslateTest",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
       "name": "Image_prep2",
       "request": "launch",
       "mainClass": "com.team.translator.Image_prep2",

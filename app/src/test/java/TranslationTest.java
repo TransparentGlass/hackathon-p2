@@ -38,9 +38,9 @@ public class TranslationTest {
     @Test
     void translateToSpanishTest(){
         Translator translator = new Translator();
-        String result = translator.translate("Hello", "en", "es");
+        String result = translator.translate("Hello", "auto", "fr");
         logger.info("Translation result: " + result);
-        assertTrue(result.contains("Hola"), "Should contain hola");
+        assertTrue(result.contains("Bonjour"), "Should contain bonjour");
 
     }
 

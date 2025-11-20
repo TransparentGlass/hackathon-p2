@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 
 import com.google.gson.JsonObject;
@@ -14,7 +15,9 @@ public class LibreTranslateTest {
     public static void main(String[] args) {
         try {
             // Point to your self-hosted LibreTranslate server
-            URi url = new URL("http://localhost:5000/");
+            URI uri = new URI("http://127.0.0.1:5000/translate");
+            URL url = uri.toURL();
+
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -25,7 +28,7 @@ public class LibreTranslateTest {
             JsonObject jsonInput = new JsonObject();
             jsonInput.addProperty("q", "Hello world");
             jsonInput.addProperty("source", "en");
-            jsonInput.addProperty("target", "es");
+            jsonInput.addProperty("target", "fr");
             jsonInput.addProperty("format", "text");
 
             // Send request
