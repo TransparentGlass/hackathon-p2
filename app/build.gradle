@@ -1,6 +1,7 @@
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.14'
+    id 'java'
 }
 
 repositories {
@@ -19,6 +20,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.11.0'
 
     implementation "org.bytedeco:opencv-platform:4.9.0-1.5.10"
+
+    implementation 'com.google.code.gson:gson:2.10.1'
 
 }
 
@@ -42,3 +45,11 @@ task copyJavafxLibs(type: Copy) {
         mkdir "$projectDir/javafx-lib"
     }
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+

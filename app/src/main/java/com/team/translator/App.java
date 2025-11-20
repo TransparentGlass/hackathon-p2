@@ -48,7 +48,7 @@ public class App extends Application {
                             // showBufferedImage(raw, "welp");
 
                             // Run OCR (ensure Tesseract is installed and path is correct)
-                            OcrService ocr = new OcrService("D:\\Software\\Tesseract\\tessdata", "rus");
+                            OcrService ocr = new OcrService("D:\\Software\\Tesseract\\tessdata", "eng");
                             String text = ocr.read(raw);
 
                             // Show result on JavaFX thread
